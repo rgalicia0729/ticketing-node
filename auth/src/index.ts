@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(
   cookieSession({
     signed: false,
-    secure: true,
+    secure: false,
   })
 );
 
@@ -35,7 +35,7 @@ app.all('*', () => {
 app.use(errorHandler);
 
 const start = async () => {
-  if (process.env.JWT_SECRET_KEY) {
+  if (!process.env.JWT_SECRET_KEY) {
     throw new Error('JWT_SECRET_KEY must be defined');
   }
 
