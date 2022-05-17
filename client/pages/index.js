@@ -1,18 +1,14 @@
 import React from 'react';
-import axios from 'axios';
+import { buildClient } from '../api/build-client';
 
 const Home = ({ currentUser }) => {
-  console.log(currentUser);
-
-  return (
-    <h1>Home Page</h1>
-  );
+  return currentUser ? <h1>You are signed in</h1> : <h1>You are NOT signed in</h1>
 };
 
-Home.getInitialProps = async () => {
-  const response = await axios.get('/api/users/currentuser');
+Home.getInitialProps = async (context) => {
+  const { data } = await buildClient(context).get('/api/users/currentuser');
 
-  return response.data;
+  return data;
 };
 
 export default Home;
